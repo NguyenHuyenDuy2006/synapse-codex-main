@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once 'config.php';
 
 try {
-    // Lấy id và username từ bảng users
-    $stmt = $conn->prepare("SELECT id, username FROM users ORDER BY id ASC");
+    // Lấy id, username và full_name từ bảng users
+    $stmt = $conn->prepare("SELECT id, username, full_name FROM users ORDER BY id ASC");
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
