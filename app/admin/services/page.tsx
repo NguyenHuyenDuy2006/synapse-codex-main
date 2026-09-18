@@ -166,12 +166,21 @@ export default function AdminServicesPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-8">
           <div>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition mb-2"
-            >
-              <ArrowLeft className="h-4 w-4" /> Về trang chủ
-            </Link>
+            <div className="flex items-center gap-3 mb-2">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" /> Trang chủ
+              </Link>
+              <span className="text-slate-700">/</span>
+              <Link
+                href="/admin/projects"
+                className="text-sm text-cyan-400 hover:text-cyan-300 transition"
+              >
+                Quản lý Dự án
+              </Link>
+            </div>
             <h1 className="text-3xl font-bold tracking-tight text-white">Quản lý Dịch vụ</h1>
             <p className="text-sm text-slate-400 mt-1">
               Thêm, chỉnh sửa hoặc xóa các dịch vụ hiển thị ngoài trang chủ
