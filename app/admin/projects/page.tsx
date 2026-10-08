@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Plus,
@@ -40,10 +40,30 @@ const MOCK_PROJECTS: Project[] = [
 ];
 
 export default function ProjectsListPage() {
-  const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", description: "" });
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("http://localhost/synapse-codex-main/backend/get_projects.php");
+        const json = await res.json();
+        if (json.status) {
+          setProjects(json.data);
+        } else {
+          setProjects(MOCK_PROJECTS);
+        }
+      } catch (err) {
+        setProjects(MOCK_PROJECTS);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,7 +161,11 @@ export default function ProjectsListPage() {
         </div>
 
         {/* Project Grid */}
-        {projects.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center py-24">
+            <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
+          </div>
+        ) : projects.length === 0 ? (
           <div className="text-center py-24 border border-dashed border-slate-800 rounded-2xl">
             <FolderKanban className="h-12 w-12 text-slate-600 mx-auto mb-3" />
             <p className="text-slate-400 mb-4">Chưa có dự án nào.</p>
